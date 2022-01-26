@@ -1,0 +1,33 @@
+db:
+| :foo, 42
+| :foo, "fooey"
+| :foo, 21
+| :bar, "yo", "pro"
+| :bar, "hi";
+
+skip_col: ?a some;
+first_col: ?a ?b a;
+unbox: ?@a a;
+unbox_first_col: ?@a ?n a;
+
+// get all the unique values in one column, and return the other columns so we can do it for them as well
+uniquify_col: ?@all ?n (
+    (
+    |   :uniqed, all :uniqed
+    |   :uniqed, n, all :todo first_col
+    |   :todo, all :todo skip_col
+    )@, n+1
+);
+
+initial_state: (:todo, db)@, 0;
+
+// (1) works, (2) gives a type inference error:
+
+// (1)
+initial_state uniquify_col unbox_first_col
+
+// (2)
+// initial_state uniquify_col uniquify_col unbox_first_col
+
+// my goal is for this to work:
+// (fix initial_state uniquify_col) unbox_first_col

@@ -1,0 +1,17 @@
+ids: 1 | 2 | 3 | 4;
+names: 1, "alice" | 2, "bob" | 3, "charlie" | 4, "eve";
+industries: 1, "adult toys" | 2, "building services" | 3, "cardiology";
+fav_foods: 2, "bagels" | 4, "eggplant";
+
+joined: ids ?id
+    nam: names id;
+    ind: industries id;
+    fav: fav_foods id;
+
+    ind: ind! "NULL" | ind;
+    fav: fav! "NULL" | fav;
+
+    id, nam, ind, fav
+;
+
+joined
